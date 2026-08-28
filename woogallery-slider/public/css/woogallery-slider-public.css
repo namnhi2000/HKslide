@@ -1,0 +1,364 @@
+/* ==========================================================================
+   WooGallery Slider Frontend Stylesheet - Premium Design v1.0.4
+   ========================================================================== */
+
+:root {
+    --woogallery-primary: #1e3a8a;
+    --woogallery-active-border: #1e3a8a;
+    --woogallery-border-radius: 12px;
+    --woogallery-thumb-radius: 8px;
+    --woogallery-bg-placeholder: #f8fafc;
+    --woogallery-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+    --woogallery-shadow-active: 0 12px 24px rgba(30, 58, 138, 0.15);
+    --woogallery-transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    --woogallery-zoom-transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Container chính */
+.woogallery-container {
+    max-width: 100%;
+    margin: 0 auto 30px auto;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    backface-visibility: hidden;
+}
+
+/* Khu vực Slider ảnh chính */
+.woogallery-main-wrapper {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: transparent;
+    width: 100%;
+}
+
+.woogallery-slide-inner {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+}
+
+.woogallery-main-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    transition: var(--woogallery-zoom-transition);
+    transform-origin: 50% 50%;
+}
+
+/* Nút Expand phóng to (Góc dưới bên trái ảnh chính - giống ảnh 2) */
+.woogallery-expand-btn {
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    z-index: 10;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1.5px solid #d1d5db;
+    color: #4b5563;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    padding: 0;
+}
+
+.woogallery-expand-btn:hover {
+    background: #ffffff;
+    color: #111827;
+    border-color: #9ca3af;
+    transform: scale(1.08);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.woogallery-expand-btn:active {
+    transform: scale(0.95);
+}
+
+/* Zoom state */
+.woogallery-zoomable {
+    cursor: zoom-in;
+}
+
+/* Thumbnail wrapper */
+.woogallery-thumbs-wrapper {
+    width: 100%;
+}
+
+.woogallery-thumb-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 2px;
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+    cursor: pointer;
+    background: #ffffff;
+    transition: all 0.2s ease;
+    padding: 0;
+    box-shadow: none;
+}
+
+.woogallery-thumb-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    border-radius: 0;
+    opacity: 0.45;
+    filter: none;
+    transition: opacity 0.2s ease;
+}
+
+.woogallery-thumb-inner:hover img {
+    opacity: 0.85;
+}
+
+/* Khi thumbnail ở trạng thái ACTIVE (Giống ảnh 2 - viền xám đậm tối giản) */
+.splide__slide.is-active .woogallery-thumb-inner {
+    border-color: #6b7280;
+    box-shadow: none;
+    transform: none;
+}
+
+.splide__slide.is-active .woogallery-thumb-inner img {
+    opacity: 1;
+}
+
+/* Custom các nút điều hướng Splide (Mũi tên tối giản cực sang giống Ảnh 2) */
+.woogallery-container .splide__arrow {
+    background: transparent;
+    border: none;
+    width: 36px;
+    height: 36px;
+    color: #4b5563;
+    opacity: 0.8;
+    visibility: visible;
+    transition: all 0.2s ease;
+    box-shadow: none;
+}
+
+.woogallery-container .splide__arrow--prev {
+    left: 8px;
+}
+
+.woogallery-container .splide__arrow--next {
+    right: 8px;
+}
+
+.woogallery-container:hover .splide__arrow {
+    opacity: 1;
+    visibility: visible;
+}
+
+.woogallery-container .splide__arrow:hover {
+    background: transparent;
+    color: #111827;
+    opacity: 1;
+    box-shadow: none;
+    transform: translateY(-50%) scale(1.2);
+}
+
+.woogallery-container .splide__arrow:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.woogallery-container .splide__arrow svg {
+    stroke: currentColor;
+    fill: none;
+    width: 22px;
+    height: 22px;
+}
+
+/* ==========================================================================
+   Bố Cục (Layouts): Left / Right Thumbnail (Dành cho máy tính PC)
+   ========================================================================== */
+@media (min-width: 768px) {
+    /* Layout Thumbnail nằm bên trái */
+    .woogallery-layout-left {
+        display: grid;
+        grid-template-columns: calc(var(--woogallery-thumb-w, 80px) + 8px) 1fr;
+        gap: 20px;
+    }
+    
+    .woogallery-layout-left .woogallery-main-wrapper {
+        grid-column: 2;
+        grid-row: 1;
+    }
+    
+    .woogallery-layout-left .woogallery-thumbs-wrapper {
+        grid-column: 1;
+        grid-row: 1;
+        height: 100%;
+        max-height: 480px;
+    }
+    
+    /* Layout Thumbnail nằm bên phải */
+    .woogallery-layout-right {
+        display: grid;
+        grid-template-columns: 1fr calc(var(--woogallery-thumb-w, 80px) + 8px);
+        gap: 20px;
+    }
+    
+    .woogallery-layout-right .woogallery-main-wrapper {
+        grid-column: 1;
+        grid-row: 1;
+    }
+    
+    .woogallery-layout-right .woogallery-thumbs-wrapper {
+        grid-column: 2;
+        grid-row: 1;
+        height: 100%;
+        max-height: 480px;
+    }
+    
+    .woogallery-layout-left .splide--nav,
+    .woogallery-layout-right .splide--nav {
+        height: 100%;
+    }
+}
+
+/* ==========================================================================
+   Giao Diện PREMIUM LIGHTBOX (Tối giản cực sang trọng)
+   ========================================================================== */
+.woogallery-lightbox-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10, 15, 30, 0.95);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    z-index: 9999999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
+}
+
+.woogallery-lightbox-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.woogallery-lightbox-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: scale(0.95);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.woogallery-lightbox-overlay.active .woogallery-lightbox-content {
+    transform: scale(1);
+}
+
+.woogallery-lightbox-img {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 6px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+    background-color: transparent;
+}
+
+/* Thao tác nút trong lightbox */
+.woogallery-lightbox-btn {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    transition: var(--woogallery-transition);
+}
+
+.woogallery-lightbox-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.08);
+}
+
+.woogallery-lightbox-btn:active {
+    transform: scale(0.95);
+}
+
+/* Nút Close */
+.woogallery-lightbox-close {
+    top: 30px;
+    right: 30px;
+    width: 48px;
+    height: 48px;
+    font-size: 28px;
+    line-height: 1;
+    font-weight: 300;
+}
+
+/* Nút chuyển ảnh */
+.woogallery-lightbox-prev {
+    left: 30px;
+    width: 52px;
+    height: 52px;
+    font-size: 20px;
+}
+
+.woogallery-lightbox-next {
+    right: 30px;
+    width: 52px;
+    height: 52px;
+    font-size: 20px;
+}
+
+/* Caption đếm */
+.woogallery-lightbox-caption {
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 24px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+@media (max-width: 767px) {
+    .woogallery-lightbox-prev {
+        left: 15px;
+        width: 44px;
+        height: 44px;
+    }
+    .woogallery-lightbox-next {
+        right: 15px;
+        width: 44px;
+        height: 44px;
+    }
+    .woogallery-lightbox-close {
+        top: 20px;
+        right: 20px;
+    }
+}
